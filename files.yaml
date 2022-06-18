@@ -1,0 +1,16 @@
+---
+- name: Manage files
+  hosts: amazon
+  become: yes 
+  become_method: sudo 
+  tasks:
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: /etc/foo.conf
+      owner: ec2-user
+      group: ec2-user
+      mode: '0644'
+      state: touch 
+...
+
+# ansible-playbook -i inventory.yaml   files.yaml 

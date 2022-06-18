@@ -1,0 +1,27 @@
+--- #  Connection block
+- name: our first playbook
+  hosts: amazon
+  become: true
+  become_method: sudo             #become root user
+  tasks:
+  - name: Ensure groups exist
+    ansible.builtin.group:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - sales
+    - marketing
+    - billing
+    - developers
+    ignore_errors: true
+
+  - name: Ensure groups do not exist
+    ansible.builtin.group:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+    - devops
+...
+
+
+# ansible-playbook -i inventory.yaml group.yaml 

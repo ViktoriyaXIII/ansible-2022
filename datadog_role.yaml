@@ -1,0 +1,7 @@
+- name: Install DD agent
+  hosts: all 
+  roles:
+    - { role: datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "e2aa351a96ef90235d92d7d6a144aec6"
+    datadog_site: "datadoghq.eu"

@@ -1,0 +1,5 @@
+- name: Start wordpress 
+  systemd: 
+    name: httpd 
+    state: restarted
+    enabled: true

@@ -1,0 +1,48 @@
+---
+- name: Zip log files
+  hosts: amazon
+  become: yes 
+  become_method: sudo 
+  tasks:
+  - name: Zip files over 90 days
+    raw: 'find /var/log/ -type f -name "*.log" -mtime +90 -exec gzip -v9 {} +'
+  - name: Zip files over 100M
+    raw: 'find /var/log/ -type f -name "*.log" -size +100M -exec gzip -v9 {} +'
+
+
+
+
+# ansible-playbook -i inventory.yaml zip.yaml 
+
+
+
+
+
+
+
+
+
+# RCA 
+# Root  Cause analysis 
+# Service Level Agreement 
+# What happened? 
+# 2:00 am Engineer Received a call from customer stating app is down. 
+# 2:05 am Engineer verified app is down and started troubleshooting. 
+# 2:10 am Engineer restarts the app. App is complaining that it cant talk to DB 
+# 2:20 am Engineer checks DB PORT, DB service, DB Firewall. 
+# 2:40 am Engineer found out DB  is down. 
+# 2:45 am Engineer calls DB engineers
+# 2:50 am DB Engineer joins the call 
+# 3:00 am  DB engineer restarted DB.  DB cant be started, disk is full 
+
+# How we fixed it? 
+# 3:20 am System engineer joins the call zips unnecessary logs
+# 3:30 am DB restarted 
+# 3:45 am Application restarted 
+# 4:00 am Customer notified that  app is functioning properly 
+
+# How to prevent?
+# 1. Get alerts when disk usage at 75%  as a priority 2     2 hr 
+# 2. Get alerts when disk usage at 90%  as a priority 1     15 min 
+# 3. Monitor DB separately 
+# 4. Alerts regarding ports 

@@ -1,0 +1,49 @@
+---
+- name: Download playbook
+  hosts: aws_ec2
+  become: yes
+  become_method: sudo 
+  user: ec2-user
+  tasks:
+  - name: Install package
+    when: ansible_facts['distribution'] == "Amazon"
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present          
+    with_items:
+    - httpd
+    notify: 
+    - Restart Apache
+    - Restart db 
+    - Restart cache
+
+
+  - name: Install package
+    when: ansible_facts['distribution'] == "Amazon"
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present          
+    with_items:
+    - mysql
+    notify: 
+    - Restart db 
+
+
+  handlers:
+  - name: Restart Apache
+    when: ansible_facts['distribution'] == "Amazon"
+    ansible.builtin.systemd:
+      name: httpd
+      state: restarted 
+
+  - name: Restart db 
+    when: ansible_facts['distribution'] == "Amazon"
+    ansible.builtin.systemd:
+      name: mysql
+      state: restarted 
+
+  - name: Restart cache
+    when: ansible_facts['distribution'] == "Amazon"
+    ansible.builtin.systemd:
+      name: redis
+      state: restarted 

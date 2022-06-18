@@ -1,0 +1,7 @@
+- name: Wordpress Playbook
+  hosts: all
+  become: True
+  become_method: sudo 
+  roles:
+    - role: wordpress    
+      when: ansible_facts['distribution'] == "Amazon"

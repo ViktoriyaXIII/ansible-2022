@@ -1,0 +1,29 @@
+- name: Install Packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest          #absent          # latest   # removed 
+  with_items:
+  - telnet
+  - wget 
+  - elinks
+  - curl
+  - httpd 
+  - php
+  - php-mysql 
+  notify: Start wordpress
+   
+- name: Download wordpress 
+  get_url:
+    url: https://wordpress.org/wordpress-"{{ wordpress_version }}".tar.gz
+    dest: /tmp/wordpress-"{{ wordpress_version }}".tar.gz
+    mode: '0440'
+
+- name: Unzip wordpress
+  ansible.builtin.unarchive:
+    src: /tmp/wordpress-"{{ wordpress_version }}".tar.gz
+    dest: /var/www/html/
+    remote_src: true
+
+- name: Host Wordpress
+  shell: "cp -r /var/www/html/wordpress/* /var/www/html/"
+  ignore_errors: true

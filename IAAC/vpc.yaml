@@ -1,0 +1,35 @@
+- name: Create VPC 
+  hosts: localhost
+  tasks:
+  - name: create a VPC with dedicated tenancy and a couple of tags
+    amazon.aws.ec2_vpc_net:
+      name: Module_dev2
+      cidr_block: 10.0.0.0/16
+      region: us-east-1
+      tenancy: default
+      state: absent          # absent
+      tags:
+        module: ec2_vpc_net
+        this: works
+
+  - name: create a VPC with dedicated tenancy and a couple of tags
+    amazon.aws.ec2_vpc_net:
+      name: Module_dev2
+      cidr_block: 10.0.0.0/16
+      region: us-east-2
+      tenancy: default
+      state: absent          # absent
+      tags:
+        module: ec2_vpc_net
+        this: works
+
+# ansible-playbook IAAC/vpc.yaml 
+
+
+
+#  Task, create 3 private subnets,   3 public subnets  1 Internet gateway, 2 routes 
+
+# Documentation
+# https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_vpc_subnet_module.html
+# https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_vpc_igw_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/aws/ec2_vpc_route_table_module.html

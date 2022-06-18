@@ -1,0 +1,15 @@
+--- #  Connection block
+- name: our first playbook
+  hosts: amazon
+  become: true
+  become_method: sudo             #become root user
+  tasks:
+  - name: Update Kernel
+    ansible.builtin.package:
+      name: kernel
+      state: latest
+
+  - name: Update all
+    ansible.builtin.package:
+      name: "*"
+      state: latest

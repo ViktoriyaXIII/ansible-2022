@@ -1,0 +1,20 @@
+--- 
+- name: Testing a webserver
+  hosts: amazon 
+  become: true     # True   # Yes  #yes
+  become_method: sudo 
+  tasks:
+  - block:
+    - name: Install webserver 
+      apt: 
+        name: httpd 
+        state: present
+
+    rescue:
+    - name: Webserver
+      package:
+        name: httpd
+        state: present
+
+
+# ansible-playbook -i inventory.yaml  error_handling.yaml  

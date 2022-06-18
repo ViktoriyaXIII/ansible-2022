@@ -1,0 +1,16 @@
+---
+- name: unarchive files
+  hosts: amazon
+  become: yes 
+  become_method: sudo 
+  tasks:
+
+  - name: Extract wordpress
+    ansible.builtin.unarchive:
+      src: /tmp/wordpress.tar.gz
+      dest: /tmp/
+      remote_src: true
+
+
+
+# ansible-playbook -i inventory.yaml   unarchive.yaml 

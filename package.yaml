@@ -1,0 +1,28 @@
+---
+- name: First playbook
+  hosts: amazon
+  become: yes
+  become_method: sudo 
+  user: ec2-user
+  tasks:
+  - name: Install package
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: latest          #absent          # latest   # removed 
+    with_items:
+    - telnet
+    - wget 
+    - elinks
+    - curl
+    
+
+  - name: Remove packages
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: absent          #absent          # latest   # removed 
+    with_items:
+    - lftp
+
+...
+
+# ansible-playbook -i inventory.yaml package.yaml 

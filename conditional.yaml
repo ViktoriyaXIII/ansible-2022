@@ -1,0 +1,35 @@
+---
+- name: Information about the host
+  hosts: localhost
+  tasks: 
+  - name: Print all available facts
+    ansible.builtin.debug:
+      var: ansible_facts
+
+  # - name: Print Nodename
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['nodename']
+
+
+  # - name: Print Kernel
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['kernel']
+
+
+  # - name: Print python information
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['python']['version']['major']
+
+  # - name: Print os_family
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['os_family']
+
+
+  # - name: Print distribution
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['distribution']
+
+
+  # - name: Print distribution_version
+  #   ansible.builtin.debug:
+  #     var: ansible_facts['distribution_version']
